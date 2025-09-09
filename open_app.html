@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EGAS Task Manager - Launcher</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 50px auto; 
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #2c3e50; text-align: center; }
+        .step { 
+            margin: 20px 0; 
+            padding: 15px; 
+            background: #ecf0f1; 
+            border-radius: 5px; 
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px 5px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .button:hover { background: #2980b9; }
+        .seed-button { background: #e74c3c; }
+        .seed-button:hover { background: #c0392b; }
+        .login-info {
+            background: #d5f4e6;
+            border: 1px solid #27ae60;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .credentials {
+            font-family: monospace;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 5px 0;
+        }
+        .status {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .checking { background: #f39c12; color: white; }
+        .ready { background: #27ae60; color: white; }
+        .error { background: #e74c3c; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 EGAS Task Manager - Enhanced Version</h1>
+        
+        <div id="status" class="status checking">
+            ⏳ Checking server status...
+        </div>
+
+        <div class="step">
+            <h3>Step 1: Initialize Database</h3>
+            <p>First, click this button to seed the database with sample data:</p>
+            <a href="http://localhost:5000/seed" class="button seed-button" target="_blank">
+                🌱 Seed Database
+            </a>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Access Application</h3>
+            <p>After seeding, click here to open the main application:</p>
+            <a href="http://localhost:5000" class="button" target="_blank">
+                🏠 Open EGAS Task Manager
+            </a>
+        </div>
+
+        <div class="login-info">
+            <h3>🔐 Login Credentials:</h3>
+            <div class="credentials" style="background: #ff1744; color: white; font-weight: bold;">🌟 GLOBAL ADMIN: admin@egas / 123</div>
+            <div class="credentials">Dept Head: head_operations@egas / 123</div>
+            <div class="credentials">Dept Head: head_cyber@egas / 123</div>
+            <div class="credentials">Dept Head: head_engineering@egas / 123</div>
+            <div class="credentials">Employee: operations1@egas / 123</div>
+            <div class="credentials">Employee: cyber1@egas / 123</div>
+            <div class="credentials">Employee: engineering1@egas / 123</div>
+            <div class="credentials">... and 300+ more users in 7 departments!</div>
+        </div>
+
+        <div class="step">
+            <h3>✨ What's Enhanced:</h3>
+            <ul>
+                <li><strong>Security:</strong> Password hashing, account lockout protection</li>
+                <li><strong>Performance:</strong> Optimized database queries and indexing</li>
+                <li><strong>Logging:</strong> Comprehensive audit trails and error logging</li>
+                <li><strong>Error Handling:</strong> Graceful error management throughout</li>
+                <li><strong>Same Design:</strong> Your original templates and styling preserved</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check if server is running
+        async function checkServerStatus() {
+            const statusElement = document.getElementById('status');
+            try {
+                const response = await fetch('http://localhost:5000', { 
+                    method: 'HEAD',
+                    mode: 'no-cors'
+                });
+                statusElement.className = 'status ready';
+                statusElement.innerHTML = '✅ Server is running - Ready to use!';
+            } catch (error) {
+                statusElement.className = 'status error';
+                statusElement.innerHTML = '❌ Server not responding - Make sure to run run_server.bat first!';
+            }
+        }
+
+        // Check status when page loads
+        checkServerStatus();
+        
+        // Check status every 5 seconds
+        setInterval(checkServerStatus, 5000);
+    </script>
+</body>
+</html>
